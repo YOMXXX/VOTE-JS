@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#suppport,
+			#desupport {
+				width: 100px;
+				height: 50px;
+				border: 1px solid red;
+				float: left;
+			}
+			
+			p {
+				float: left;
+				width: 200px;
+				height: 20px;
+				border: 1px solid black;
+			}
+			
+			#bar {
+				width: 404px;
+				/*float: left;*/
+				height: 22px;
+			}
+			
+			#contain {
+				overflow: hidden;
+				float: left;
+				width: 202px;
+				height: 44px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div style="float: left;">
+			<div id="suppport">0</div>
+			<div id="desupport">0</div>
+		</div>
+		<div id="contain">
+			<div id="bar">
+				<p class="sup"></p>
+				<p class="desup"></p>
+			</div>
+		</div>
+		<ul>
+			<li></li>
+			<li></li>
+		</ul>
+	</body>
+	<script src="js/jquery-1.11.0.js"></script>
+	<script>
+		function a() {
+			var b = {
+				sup: 0,
+				desup: 0,
+				supPer: function() {
+					return this.sup / (this.sup + this.desup);
+				},
+				desupPer: function() {
+					return this.desup / (this.sup + this.desup);
+				}
+			}
+			return b
+		}
+		var w = a();
+		$('#suppport').click(function() {
+			w.sup++;
+			$(this).html(w.sup);
+			$('.sup').css({
+				'background': 'red'
+			})
+			$('.desup').css({
+				'marginLeft': -Math.floor($('.sup').outerWidth() * w.desupPer()) + 'px',
+			});
+			$('ul li').eq(0).html(parseInt((w.supPer() * 100)) + "%");
+			$('ul li').eq(1).html(parseInt(100 - ((w.supPer()) * 100)) + "%");
+		});
+		$('#desupport').click(function() {
+			w.desup++;
+			$(this).html(w.desup);
+			$('.desup').css({
+				'background': 'blue',
+				'marginLeft': -Math.floor(($('.desup').outerWidth() * w.desupPer())) + 'px'
+			})
+			$('ul li').eq(0).html(parseInt((w.supPer() * 100)) + "%");
+			$('ul li').eq(1).html(parseInt(100 - ((w.supPer()) * 100)) + "%");
+		});
+	</script>
+
+</html>
